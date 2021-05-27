@@ -114,7 +114,7 @@ new Vue({
       }
     },
     methods: {
-        async startEditingItem(item){
+        async startFindingItemParent(item){
             Vue.set(this,"currentCategory",Object.assign({},item))
             await this.findParent(this.categories,item)
             if(!!this.tempParent.child){
