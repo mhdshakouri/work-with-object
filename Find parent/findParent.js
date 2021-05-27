@@ -109,6 +109,10 @@ new Vue({
             ],
           },
         ],
+        targetItem:{
+            id: 12,
+            title: 'v-btn : ts'
+        },
         tempParent:{},
         currentCategory:{},
       }
@@ -144,6 +148,6 @@ new Vue({
           },
     },
     mounted() {
-      
+      this.startFindingItemParent(this.targetItem)
     }
   });
