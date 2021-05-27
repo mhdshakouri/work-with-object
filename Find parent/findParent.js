@@ -109,11 +109,39 @@ new Vue({
             ],
           },
         ],
-        
+        tempParent:{},
+        currentCategory:{},
       }
     },
     methods: {
-      
+        async startEditingItem(item){
+            Vue.set(this,"currentCategory",Object.assign({},item))
+            await this.findParent(this.categories,item)
+            if(!!this.tempParent.child){
+              delete this.tempParent.child
+            }
+            Vue.set(this.currentCategory,"parent",this.tempParent)
+          },
+          async findParent(el, item) {
+            if(Array.isArray(el)){
+              el.forEach(async temp=>{
+                if(temp.id == item.id ){
+                  this.tempParent = Object.assign({},el)
+                }else {
+                  await this.findParent(temp,item)
+                }
+              })
+            }else if(!!el.child){
+              el.child.forEach(async temp=>{
+                if(temp.id == item.id ){
+                  this.tempParent = Object.assign({},el)
+                }else{
+                  await this.findParent(temp,item)
+                }
+              })
+            }
+            this.tempParent = Object.assign({},rootCategory)
+          },
     },
     mounted() {
       
